@@ -60,7 +60,7 @@ class ClockPresenter:
             for i in range(4, 60):
                 penup()
                 goto(0, 0)
-                setheading(i * 360 / 60)
+                setheading(-i * 360 / 60)
                 pendown()
                 color(self._color)
                 forward(second_arrow_length)
