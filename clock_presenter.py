@@ -9,8 +9,8 @@ class ClockPresenter:
         reset()
         pen()
         pensize(3)
-        speed(0)  # Set to fastest speed
-        tracer(0)  # Disable animation
+        speed(0)
+        tracer(0)
         title("Годинник")
         setup(1000, 1000)
         bgcolor(self._background_color)
@@ -21,7 +21,7 @@ class ClockPresenter:
         self._draw_circle()
         self._draw_indicators()
         self._draw_arrows()
-        update()  # Update the screen to show all drawings
+        update()
         exitonclick()
 
     def _draw_circle(self):
