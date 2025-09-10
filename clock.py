@@ -15,7 +15,6 @@ class Clock:
             year = now.hour
             minute = now.minute
             second = now.second
-            print(year, minute, second, sep=':')
             self._presenter.draw_arrows(second, minute, year)
             time.sleep(1)
             self._presenter.clear_arrows(second, minute, year)
