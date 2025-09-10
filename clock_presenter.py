@@ -2,7 +2,11 @@ from turtle import *
 import time
 
 class ClockPresenter:
-    def __init__(self, radius: int = 100):
+    seconds_arrow_length = 70
+    minutes_arrow_length = 50
+    hours_arrow_length = 30
+
+    def __init__(self, hour: int = 0, minute: int = 0, second: int = 0, radius: int = 100):
         self._radius = radius
         self._background_color = "darkGreen"
         self._color = "white"
@@ -16,12 +20,14 @@ class ClockPresenter:
         bgcolor(self._background_color)
         penup()
         colormode(255)
+        hideturtle()
 
     def draw(self):
         self._draw_circle()
         self._draw_indicators()
-        self._draw_arrows()
         update()
+        while True:
+            self._update()
         exitonclick()
 
     def _draw_circle(self):
@@ -44,28 +50,40 @@ class ClockPresenter:
             backward(height)
             left(360 / 60)
 
-    def _draw_arrows(self):
-        second_arrow_length = 70
-        minute_arrow_length = int(second_arrow_length / 2)
-
+    def _draw_arrow(self, angle: int, length: int):
         penup()
+        color(self._color)
         goto(0, 0)
         pendown()
-        color(self._color)
-        forward(minute_arrow_length)
+        setheading(angle + 90)
+        forward(length)
+        update()
+    def _clear_arrow(self, angle: int, length: int):
+        penup()
+        color(self._background_color)
+        goto(0, 0)
+        pendown()
+        setheading(angle + 90)
+        forward(length)
         update()
 
-        tracer(1)
-        while True:
-            for i in range(4, 60):
-                penup()
-                goto(0, 0)
-                setheading(-i * 360 / 60)
-                pendown()
-                color(self._color)
-                forward(second_arrow_length)
-                update()
-                time.sleep(1)
-                color(self._background_color)
-                backward(second_arrow_length)
-                backward(second_arrow_length)
+    def _update(self):
+        for hour in range(0, 24):
+            for minute in range(0, 60):
+                for second in range(0, 60):
+                    second_angle = -self._calculate_angle(second, 60)
+                    minute_angle = -self._calculate_angle(minute, 60)
+                    hour_angle = -self._calculate_angle(hour, 24)
+                    self._draw_arrow(second_angle, self.seconds_arrow_length)
+                    self._draw_arrow(minute_angle, self.minutes_arrow_length)
+                    self._draw_arrow(hour_angle, self.hours_arrow_length)
+                    time.sleep(1)
+                    self._clear_arrow(second_angle, self.seconds_arrow_length)
+                    self._clear_arrow(minute_angle, self.minutes_arrow_length)
+                    self._clear_arrow(hour_angle, self.hours_arrow_length)
+
+    @staticmethod
+    def _calculate_angle(value: int, maximum: int) -> int:
+        if value == 0:
+            return 0
+        return int((360 * value) / maximum)
