@@ -6,7 +6,7 @@ class ClockPresenter:
     minutes_arrow_length = 50
     hours_arrow_length = 30
 
-    def __init__(self, hour: int = 0, minute: int = 0, second: int = 0, radius: int = 100):
+    def __init__(self, radius: int = 100):
         self._radius = radius
         self._background_color = "darkGreen"
         self._color = "white"
@@ -22,13 +22,13 @@ class ClockPresenter:
         colormode(255)
         hideturtle()
 
+    def __del__(self):
+        exitonclick()
+
     def draw(self):
         self._draw_circle()
         self._draw_indicators()
         update()
-        while True:
-            self._update()
-        exitonclick()
 
     def _draw_circle(self):
         goto(0, -100)
@@ -67,20 +67,21 @@ class ClockPresenter:
         forward(length)
         update()
 
-    def _update(self):
-        for hour in range(0, 24):
-            for minute in range(0, 60):
-                for second in range(0, 60):
-                    second_angle = -self._calculate_angle(second, 60)
-                    minute_angle = -self._calculate_angle(minute, 60)
-                    hour_angle = -self._calculate_angle(hour, 24)
-                    self._draw_arrow(second_angle, self.seconds_arrow_length)
-                    self._draw_arrow(minute_angle, self.minutes_arrow_length)
-                    self._draw_arrow(hour_angle, self.hours_arrow_length)
-                    time.sleep(1)
-                    self._clear_arrow(second_angle, self.seconds_arrow_length)
-                    self._clear_arrow(minute_angle, self.minutes_arrow_length)
-                    self._clear_arrow(hour_angle, self.hours_arrow_length)
+    def draw_arrows(self, seconds: int, minutes: int, hours: int):
+        second_angle = -self._calculate_angle(seconds, 60)
+        minute_angle = -self._calculate_angle(minutes, 60)
+        hour_angle = -self._calculate_angle(hours, 24) + 90
+        self._draw_arrow(second_angle, self.seconds_arrow_length)
+        self._draw_arrow(minute_angle, self.minutes_arrow_length)
+        self._draw_arrow(hour_angle, self.hours_arrow_length)
+
+    def clear_arrows(self, seconds: int, minutes: int, hours: int):
+        second_angle = -self._calculate_angle(seconds, 60)
+        minute_angle = -self._calculate_angle(minutes, 60)
+        hour_angle = -self._calculate_angle(hours, 24) + 90
+        self._clear_arrow(second_angle, self.seconds_arrow_length)
+        self._clear_arrow(minute_angle, self.minutes_arrow_length)
+        self._clear_arrow(hour_angle, self.hours_arrow_length)
 
     @staticmethod
     def _calculate_angle(value: int, maximum: int) -> int:

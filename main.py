@@ -1,5 +1,8 @@
-from clock_presenter import ClockPresenter
+from clock import Clock
 
+def main():
+    clock = Clock()
+    clock.start()
 
-clock_presenter = ClockPresenter()
-clock_presenter.draw()
+if __name__ == '__main__':
+    main()
