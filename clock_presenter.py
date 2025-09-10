@@ -1,5 +1,5 @@
 from turtle import *
-import time
+
 
 class ClockPresenter:
     seconds_arrow_length = 70
@@ -58,6 +58,7 @@ class ClockPresenter:
         setheading(angle + 90)
         forward(length)
         update()
+
     def _clear_arrow(self, angle: int, length: int):
         penup()
         color(self._background_color)
