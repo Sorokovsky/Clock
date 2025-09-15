@@ -61,9 +61,11 @@ class ClockPresenter:
 
     def _clear_arrow(self, angle: int, length: int):
         penup()
-        color(self._background_color)
+        color(self._background_color, self._background_color)
+        pencolor(self._background_color)
         goto(0, 0)
         pendown()
+        begin_fill()
         setheading(angle + 90)
         forward(length)
         update()
@@ -71,7 +73,7 @@ class ClockPresenter:
     def draw_arrows(self, seconds: int, minutes: int, hours: int):
         second_angle = -self._calculate_angle(seconds, 60)
         minute_angle = -self._calculate_angle(minutes, 60)
-        hour_angle = -self._calculate_hour_angle(hours)
+        hour_angle = self._calculate_hour_angle(hours)
         self._draw_arrow(second_angle, self.seconds_arrow_length)
         self._draw_arrow(minute_angle, self.minutes_arrow_length)
         self._draw_arrow(hour_angle, self.hours_arrow_length)
@@ -79,7 +81,7 @@ class ClockPresenter:
     def clear_arrows(self, seconds: int, minutes: int, hours: int):
         second_angle = -self._calculate_angle(seconds, 60)
         minute_angle = -self._calculate_angle(minutes, 60)
-        hour_angle = -self._calculate_hour_angle(hours)
+        hour_angle = self._calculate_hour_angle(hours)
         self._clear_arrow(second_angle, self.seconds_arrow_length)
         self._clear_arrow(minute_angle, self.minutes_arrow_length)
         self._clear_arrow(hour_angle, self.hours_arrow_length)
@@ -95,4 +97,4 @@ class ClockPresenter:
         max_hours = 12
         angle_for_hour = 30
         hours_in_range = hours % max_hours
-        return angle_for_hour * hours_in_range
+        return -angle_for_hour * hours_in_range
