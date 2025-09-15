@@ -71,29 +71,31 @@ class ClockPresenter:
         update()
 
     def draw_arrows(self, seconds: int, minutes: int, hours: int):
-        second_angle = -self._calculate_angle(seconds, 60)
-        minute_angle = -self._calculate_angle(minutes, 60)
-        hour_angle = self._calculate_hour_angle(hours)
-        self._draw_arrow(second_angle, self.seconds_arrow_length)
-        self._draw_arrow(minute_angle, self.minutes_arrow_length)
-        self._draw_arrow(hour_angle, self.hours_arrow_length)
+        seconds_angle = self._calculate_seconds_angle(seconds)
+        minutes_angle = -self._calculate_minutes_angle(minutes)
+        hours_angle = self._calculate_hours_angle(hours)
+        self._draw_arrow(seconds_angle, self.seconds_arrow_length)
+        self._draw_arrow(minutes_angle, self.minutes_arrow_length)
+        self._draw_arrow(hours_angle, self.hours_arrow_length)
 
     def clear_arrows(self, seconds: int, minutes: int, hours: int):
-        second_angle = -self._calculate_angle(seconds, 60)
-        minute_angle = -self._calculate_angle(minutes, 60)
-        hour_angle = self._calculate_hour_angle(hours)
-        self._clear_arrow(second_angle, self.seconds_arrow_length)
-        self._clear_arrow(minute_angle, self.minutes_arrow_length)
-        self._clear_arrow(hour_angle, self.hours_arrow_length)
+        seconds_angle = self._calculate_seconds_angle(seconds)
+        minutes_angle = -self._calculate_minutes_angle(minutes)
+        hours_angle = self._calculate_hours_angle(hours)
+        self._clear_arrow(seconds_angle, self.seconds_arrow_length)
+        self._clear_arrow(minutes_angle, self.minutes_arrow_length)
+        self._clear_arrow(hours_angle, self.hours_arrow_length)
 
     @staticmethod
-    def _calculate_angle(value: int, maximum: int, minimum: int = 0) -> int:
-        if value == minimum:
-            return minimum
-        return int((360 * value) / maximum)
+    def _calculate_seconds_angle(seconds: int) -> int:
+        return -int(360 / 60) * seconds
 
     @staticmethod
-    def _calculate_hour_angle(hours: int) -> int:
+    def _calculate_minutes_angle(minutes: int) -> int:
+        return int(360 / 60) * minutes
+
+    @staticmethod
+    def _calculate_hours_angle(hours: int) -> int:
         max_hours = 12
         angle_for_hour = 30
         hours_in_range = hours % max_hours
