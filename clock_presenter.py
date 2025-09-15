@@ -45,10 +45,10 @@ class ClockPresenter:
                 height *= 2
             penup()
             goto(0, 0)
+            setheading(self._calculate_seconds_angle(i))
             forward(self._radius)
             pendown()
             backward(height)
-            left(360 / 60)
 
     def _draw_arrow(self, angle: int, length: int):
         penup()
