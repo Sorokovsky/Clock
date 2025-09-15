@@ -71,7 +71,7 @@ class ClockPresenter:
     def draw_arrows(self, seconds: int, minutes: int, hours: int):
         second_angle = -self._calculate_angle(seconds, 60)
         minute_angle = -self._calculate_angle(minutes, 60)
-        hour_angle = -self._calculate_angle(hours, 24) + 90
+        hour_angle = -self._calculate_angle(hours, 24) - 90
         self._draw_arrow(second_angle, self.seconds_arrow_length)
         self._draw_arrow(minute_angle, self.minutes_arrow_length)
         self._draw_arrow(hour_angle, self.hours_arrow_length)
@@ -79,7 +79,7 @@ class ClockPresenter:
     def clear_arrows(self, seconds: int, minutes: int, hours: int):
         second_angle = -self._calculate_angle(seconds, 60)
         minute_angle = -self._calculate_angle(minutes, 60)
-        hour_angle = -self._calculate_angle(hours, 24) + 90
+        hour_angle = -self._calculate_angle(hours, 24) - 90
         self._clear_arrow(second_angle, self.seconds_arrow_length)
         self._clear_arrow(minute_angle, self.minutes_arrow_length)
         self._clear_arrow(hour_angle, self.hours_arrow_length)
